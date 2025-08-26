@@ -4,7 +4,7 @@ import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: "https://splendorous-valkyrie-2fcaf1.netlify.app",
+  site: "https://eldoradoeditorial.com",
   integrations: [
     react(),
     tailwind({ applyBaseStyles: false }),
