@@ -47,7 +47,7 @@ const {
         data-newsletter
         class="max-w-md mx-auto flex items-stretch gap-3"
       >
-        {/* Requisitos Netlify */}
+        {/* Netlify */}
         <input type="hidden" name="form-name" value="newsletter" />
         <input type="text" name="bot-field" class="hidden" tabindex="-1" autocomplete="off" />
 
@@ -59,7 +59,7 @@ const {
           class="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
         />
 
-        {/* Usamos <button> nativo para poder enviar el form */}
+        {/* Botón nativo para submit */}
         <button
           type="submit"
           class="px-6 rounded-lg bg-gold text-primary-dark font-semibold hover:brightness-110 transition"
@@ -104,30 +104,34 @@ const {
     )}
   </div>
 
-  {/* Script local: captura este (y cualquier otro) form con data-newsletter */}
+  {/* Script: envío tipo contacto (forzamos form-name) */}
   <script is:inline>
     (() => {
       async function submitNetlifyForm(form) {
         const btn = form.querySelector('button[type="submit"]');
-        const ok = form.querySelector('[data-newsletter-ok]');
+        const ok  = form.querySelector('[data-newsletter-ok]');
         const err = form.querySelector('[data-newsletter-error]');
-        ok?.classList.add('hidden'); err?.classList.add('hidden');
+        ok?.classList.add('hidden');
+        err?.classList.add('hidden');
 
+        // Igual que en contacto: form-name SIEMPRE en el payload
         const data = new FormData(form);
-        if (!data.get('form-name')) data.set('form-name', form.getAttribute('name') || 'newsletter');
+        data.append('form-name', form.getAttribute('name') || 'newsletter');
+        const body = new URLSearchParams(data).toString();
 
         try {
           if (btn) btn.disabled = true;
           const res = await fetch('/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams([...data]).toString(),
+            body
           });
-
-          if (res.ok) { form.reset(); ok?.classList.remove('hidden'); }
-          else { err?.classList.remove('hidden'); }
-        } catch {
+          if (!res.ok) throw new Error(await res.text());
+          form.reset();
+          ok?.classList.remove('hidden');
+        } catch (e) {
           err?.classList.remove('hidden');
+          console.error('Newsletter error:', e);
         } finally {
           if (btn) btn.disabled = false;
           setTimeout(() => { ok?.classList.add('hidden'); err?.classList.add('hidden'); }, 4000);
