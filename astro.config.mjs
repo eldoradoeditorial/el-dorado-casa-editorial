@@ -4,7 +4,6 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://eldoradocasaeditorial.com',
   integrations: [
     react(),
     tailwind({
