@@ -16,14 +16,14 @@ const {
   description = "El Dorado Servicios Editoriales - Donde las palabras son tesoros. Publicamos literatura de alta calidad y obras académicas de excelencia.",
   image = "/images/og-default.jpg",
   type = "website",
-  noindex = false
+  noindex = false,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL(image, Astro.site);
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
@@ -32,15 +32,17 @@ const socialImage = new URL(image, Astro.site);
     <!-- Basic Meta Tags -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    {noindex ? (
-      <meta name="robots" content="noindex, nofollow" />
-    ) : (
-      <meta name="robots" content="index, follow" />
-    )}
+    {
+      noindex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <meta name="robots" content="index, follow" />
+      )
+    }
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Favicon -->
-    <link rel="preload" as="image" href="/images/logos/logo.svg" type="image/svg+xml" />
+    <link rel="icon" href="/images/logos/logo.svg" type="image/svg+xml" />
 
     <!-- Open Graph -->
     <meta property="og:type" content={type} />
@@ -72,7 +74,8 @@ const socialImage = new URL(image, Astro.site);
 
     <div class="min-h-screen flex flex-col">
       <!-- Header -->
-      <Header site={siteData} /> <!-- 👈 ahora Header recibe site -->
+      <Header site={siteData} />
+      <!-- 👈 ahora Header recibe site -->
 
       <!-- Main Content -->
       <main id="main" class="flex-grow">
@@ -80,7 +83,8 @@ const socialImage = new URL(image, Astro.site);
       </main>
 
       <!-- Footer -->
-      <Footer site={siteData} /> <!-- 👈 y Footer también -->
+      <Footer site={siteData} />
+      <!-- 👈 y Footer también -->
     </div>
 
     <!-- Alpine: cargar como módulo desde archivo propio -->

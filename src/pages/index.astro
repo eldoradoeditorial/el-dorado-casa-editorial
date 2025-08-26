@@ -19,6 +19,14 @@ const serviciosDestacados = getAllServices().slice(0, 3);
 
 // SIEMPRE 3 libros según la regla pedida
 const librosDestacados = getHomeBooks(3);
+
+// Ajuste de columnas para centrar si hay 1 o 2
+const gridColsClass =
+  librosDestacados.length === 1
+    ? "grid-cols-1 justify-center"
+    : librosDestacados.length === 2
+    ? "grid-cols-2 justify-center"
+    : "md:grid-cols-2 lg:grid-cols-3";
 ---
 
 <BaseLayout title={`${siteData.name} - ${siteData.tagline}`}>
@@ -124,9 +132,9 @@ const librosDestacados = getHomeBooks(3);
         Catálogo de Libros
       </h2>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class={`grid gap-8 ${gridColsClass}`}>
         {librosDestacados.map((libro) => (
-          <Card variant="elevated" hover={true} class="overflow-hidden">
+          <Card variant="elevated" hover={true} class="overflow-hidden w-full max-w-[22rem] mx-auto">
             <!-- Portada -->
             <figure class="aspect-book rounded-lg overflow-hidden bg-gray-100 mb-4">
               <img
