@@ -1,0 +1,161 @@
+---
+import type { SiteData } from "../../types/global";
+
+const { site } = Astro.props as { site: SiteData };
+
+const currentYear = new Date().getFullYear();
+const footerSections = site.footerSections ?? [];
+const social = site.social ?? {};
+
+// Ubicaciones (nuevo esquema con locations)
+const locations = site.contact?.locations ?? [];
+const cityCountry = locations.length
+  ? locations.map((l) => `${l.city}, ${l.country}`).join(" / ")
+  : "";
+const primaryLocation = locations[0]
+  ? `${locations[0].city}, ${locations[0].country}`
+  : "";
+
+// Soporte para X o twitter en el JSON
+const xUrl = (social as any).x ?? social.twitter ?? "";
+---
+<footer class="bg-bg-dark text-text-inverse">
+  <!-- Main footer content -->
+  <div class="container py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
+      <!-- Logo and description -->
+      <div class="lg:col-span-2">
+        <div class="flex items-center space-x-3 mb-6">
+          <img
+            src="/images/logos/logo.svg"
+            alt={`${site.name} - logo`}
+            class="h-12 w-auto shrink-0"
+            loading="lazy"
+            decoding="async"
+          />
+          <div>
+            <div class="font-display font-bold text-xl text-white">
+              {site.shortName}
+            </div>
+            <div class="text-sm text-gray-400">{site.subtitle}</div>
+          </div>
+        </div>
+
+        <p class="text-gray-300 mb-6 max-w-sm">
+          {site.description}
+        </p>
+
+        <!-- Newsletter (opcional) -->
+        <div class="mb-6">
+          <h3 class="font-semibold text-white mb-3">
+            Suscríbete a nuestro boletín
+          </h3>
+          <form class="flex space-x-2" method="post" action="/api/newsletter">
+            <input
+              type="email"
+              name="email"
+              placeholder="Tu email"
+              required
+              class="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+            />
+            <button
+              type="submit"
+              class="px-4 py-2 bg-gold hover:bg-gold-light text-text-primary font-medium rounded-md transition-colors"
+            >
+              Suscribir
+            </button>
+          </form>
+        </div>
+
+        <!-- Social links (solo renderiza si hay URL) -->
+        <div class="flex space-x-4">
+          {social.facebook && (
+            <a
+              href={social.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-400 hover:text-gold transition-colors"
+              aria-label="Facebook"
+              title="Facebook"
+            >
+              <svg class="w-6 h-6" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                <path d="M22 12.06C22 6.48 17.52 2 11.94 2S2 6.48 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H8.9v-2.91h1.54V10.1c0-1.52.9-2.36 2.28-2.36.66 0 1.35.12 1.35.12v1.49h-.76c-.75 0-.98.47-.98.95v1.15h1.67l-.27 2.91h-1.4V22c4.78-.76 8.44-4.92 8.44-9.94z"/>
+              </svg>
+            </a>
+          )}
+          {social.instagram && (
+            <a
+              href={social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-400 hover:text-gold transition-colors"
+              aria-label="Instagram"
+              title="Instagram"
+            >
+              <svg class="w-6 h-6" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2c1.66 0 3 1.34 3 3v10c0 1.66-1.34 3-3 3H7c-1.66 0-3-1.34-3-3V7c0-1.66 1.34-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2.2A2.8 2.8 0 1112 16a2.8 2.8 0 010-5.6zM17.8 6a1 1 0 100 2 1 1 0 000-2z"/>
+              </svg>
+            </a>
+          )}
+          {xUrl && (
+            <a
+              href={xUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-400 hover:text-gold transition-colors"
+              aria-label="X"
+              title="X"
+            >
+              <svg class="w-6 h-6" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor">
+                <path d="M4 4l16 16M20 4L4 20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          )}
+        </div>
+      </div>
+
+      <!-- Footer sections (desde site.footerSections) -->
+      {footerSections.map((section) => (
+        <div>
+          <h3 class="font-semibold text-white mb-4">{section.title}</h3>
+          <ul class="space-y-3">
+            {section.links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-gray-300 hover:text-gold transition-colors text-sm"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Bottom footer -->
+  <div class="border-t border-gray-800">
+    <div class="container py-6">
+      <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6 text-sm text-gray-400">
+          <p>&copy; {currentYear} {site.name}. Todos los derechos reservados.</p>
+          <div class="flex space-x-4">
+            <a href="/privacidad" class="hover:text-gold transition-colors">Política de Privacidad</a>
+            <a href="/terminos" class="hover:text-gold transition-colors">Términos de Uso</a>
+            <a href="/cookies" class="hover:text-gold transition-colors">Política de Cookies</a>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-2 text-sm text-gray-400">
+          <span>Hecho con</span>
+          <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+          </svg>
+          <span>{primaryLocation || cityCountry || '—'}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteData } from '../utils/data';
+const updated = new Date().toISOString().slice(0, 10);
+---
+
+<BaseLayout
+  title={`Términos de Uso - ${siteData.shortName}`}
+  description="Condiciones de uso del sitio web y reglas para usuarios y autores."
+>
+  <section class="section">
+    <div class="container prose max-w-none">
+      <h1>Términos de Uso</h1>
+      <p><em>Última actualización: {updated}</em></p>
+
+      <h2>1. Objeto</h2>
+      <p>Estos Términos regulan el acceso y uso del sitio web de {siteData.name}. Al navegar, aceptas estas condiciones.</p>
+
+      <h2>2. Uso del sitio</h2>
+      <ul>
+        <li>No podrás usar el sitio para fines ilícitos, difamatorios, o que vulneren derechos de terceros.</li>
+        <li>Podemos suspender o limitar el acceso por mantenimiento o razones de seguridad.</li>
+      </ul>
+
+      <h2>3. Propiedad intelectual</h2>
+      <p>El contenido del sitio (marcas, logos, diseño, textos e imágenes) es propiedad de {siteData.shortName} o de sus titulares y está protegido por la ley. No se concede licencia alguna salvo autorización escrita.</p>
+
+      <h2>4. Envío de manuscritos</h2>
+      <ul>
+        <li>El autor garantiza ser titular de los derechos de la obra y que esta no infringe derechos de terceros.</li>
+        <li>El envío de un manuscrito no implica obligación de publicación ni de contratación.</li>
+        <li>Mantenemos la confidencialidad de los manuscritos recibidos durante el proceso de evaluación.</li>
+      </ul>
+
+      <h2>5. Limitación de responsabilidad</h2>
+      <p>El sitio se ofrece “tal cual”. No garantizamos disponibilidad continua ni ausencia total de errores. No seremos responsables por daños indirectos derivados del uso del sitio.</p>
+
+      <h2>6. Enlaces</h2>
+      <p>Este sitio puede contener enlaces a terceros. No controlamos su contenido ni asumimos responsabilidad por ellos.</p>
+
+      <h2>7. Cambios</h2>
+      <p>Podemos actualizar estos Términos en cualquier momento. La versión vigente estará publicada en esta página.</p>
+
+      <h2>8. Ley aplicable</h2>
+      <p>Estos Términos se interpretan conforme a la legislación colombiana, sin perjuicio de normas imperativas de tu país de residencia.</p>
+    </div>
+  </section>
+</BaseLayout>

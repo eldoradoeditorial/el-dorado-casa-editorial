@@ -1,0 +1,486 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/ui/Card.astro';
+import Button from '../components/ui/Button.astro';
+import Badge from '../components/ui/Badge.astro';
+import { siteData } from '../utils/data';
+
+const requisitos = [
+  {
+    titulo: 'Formato del Archivo',
+    descripcion: 'Documento en .doc, .docx o .pdf',
+    icono: '📄'
+  },
+  {
+    titulo: 'Tamaño Máximo',
+    descripcion: 'Hasta 100MB por archivo',
+    icono: '📏'
+  },
+  {
+    titulo: 'Idioma',
+    descripcion: 'Español (cualquier variante regional), Inglés',
+    icono: '🗣️'
+  },
+  {
+    titulo: 'Contenido Original',
+    descripcion: 'Obra inédita y de autoría propia',
+    icono: '✨'
+  }
+];
+
+const proceso = [
+  {
+    paso: '1',
+    titulo: 'Envío',
+    descripcion: 'Completa el formulario y adjunta tu manuscrito',
+    tiempo: 'Inmediato'
+  },
+  {
+    paso: '2',
+    titulo: 'Evaluación',
+    descripcion: 'Nuestro equipo editorial revisa tu obra',
+    tiempo: '5-10 días'
+  },
+  {
+    paso: '3',
+    titulo: 'Respuesta',
+    descripcion: 'Te enviamos un reporte detallado con recomendaciones',
+    tiempo: '2-3 días'
+  },
+  {
+    paso: '4',
+    titulo: 'Propuesta',
+    descripcion: 'Si tu obra es seleccionada, te enviamos una propuesta editorial',
+    tiempo: '1-2 días'
+  }
+];
+
+const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdAOnOEWBFPmFRxLIpj8guF5Z6UDYHlJNERkdpxTyc0qeZm1w/viewform?usp=header";
+
+// Email desde site.json
+const emailGeneral = siteData.contact?.email ?? 'info@eldoradocasaeditorial.com';
+---
+
+<BaseLayout 
+  title="Enviar Manuscrito - El Dorado Casa Editorial"
+  description="Envía tu manuscrito a El Dorado Casa Editorial. Evaluamos obras inéditas de calidad para publicación. Proceso gratuito y confidencial."
+>
+  <!-- Hero -->
+  <section class="section bg-gradient-to-br from-bg-primary to-bg-secondary">
+    <div class="container">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-hero text-gradient-primary mb-6">Enviar Manuscrito</h1>
+        <p class="text-lead mb-8">Tu obra podría ser nuestro próximo tesoro literario</p>
+        <p class="text-xl text-text-secondary mb-12 max-w-2xl mx-auto">
+          Evaluamos manuscritos inéditos de manera gratuita y confidencial. Si tu obra cumple con nuestros estándares de calidad, te haremos una propuesta editorial.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <Badge variant="gold" size="lg">✓ Evaluación Gratuita</Badge>
+          <Badge variant="primary" size="lg">✓ Proceso Confidencial</Badge>
+          <Badge variant="gold" size="lg">✓ Respuesta Garantizada</Badge>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Requisitos -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-display font-bold text-primary-dark mb-4">Requisitos para el Envío</h2>
+        <p class="text-xl text-text-secondary max-w-2xl mx-auto">
+          Antes de enviar tu manuscrito, asegúrate de cumplir con estos requisitos básicos.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        {requisitos.map((req) => (
+          <Card variant="outlined" hover={true}>
+            <div class="text-center">
+              <div class="text-3xl mb-3">{req.icono}</div>
+              <h3 class="font-semibold text-primary-dark mb-2">{req.titulo}</h3>
+              <p class="text-text-secondary text-sm">{req.descripcion}</p>
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      <Card variant="elevated" class="bg-blue-50 border border-blue-200">
+        <div class="flex items-start space-x-4">
+          <div class="text-2xl">💡</div>
+          <div>
+            <h3 class="font-semibold text-primary-dark mb-2">¿Tu manuscrito no está terminado?</h3>
+            <p class="text-text-secondary mb-4">
+              No hay problema. También evaluamos obras en proceso. Envía los primeros capítulos (mínimo 10,000 palabras) junto con un resumen completo de la obra.
+            </p>
+            <Button variant="secondary" size="sm" href="/servicios">Ver Servicios de Edición</Button>
+          </div>
+        </div>
+      </Card>
+    </div>
+  </section>
+
+  <!-- Proceso -->
+  <section class="section bg-bg-secondary">
+    <div class="container">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-display font-bold text-primary-dark mb-4">Nuestro Proceso de Evaluación</h2>
+        <p class="text-xl text-text-secondary max-w-2xl mx-auto">Un proceso transparente y profesional para evaluar tu obra.</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {proceso.map((etapa, index) => (
+          <div class="relative">
+            {index < proceso.length - 1 && (
+              <div class="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-primary/20 -translate-x-1/2"></div>
+            )}
+            <Card variant="elevated" hover={true}>
+              <div class="text-center">
+                <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span class="text-2xl font-bold text-white">{etapa.paso}</span>
+                </div>
+                <h3 class="text-xl font-semibold text-primary-dark mb-2">{etapa.titulo}</h3>
+                <p class="text-text-secondary mb-3">{etapa.descripcion}</p>
+                <Badge variant="secondary" size="sm">{etapa.tiempo}</Badge>
+              </div>
+            </Card>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Formulario Principal -->
+  <section class="section">
+    <div class="container">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl font-display font-bold text-primary-dark mb-6">Envía tu Manuscrito</h2>
+        <p class="text-xl text-text-secondary mb-8">
+          Nuestro formulario seguro te permitirá adjuntar archivos de hasta 100MB.
+        </p>
+
+        <!-- Tarjeta principal de envío -->
+        <Card variant="elevated" class="max-w-3xl mx-auto mb-8">
+          <div class="p-8">
+            <!-- Header con icono -->
+            <div class="text-center mb-8">
+              <div class="w-20 h-20 bg-gradient-to-br from-primary to-primary-dark rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-primary-dark mb-2">Formulario de Manuscrito</h3>
+              <p class="text-gray-600">Formulario seguro con Google Forms</p>
+            </div>
+
+            <!-- Características -->
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="text-2xl mb-2">📄</div>
+                <h4 class="font-semibold text-sm mb-1">Formatos Aceptados</h4>
+                <p class="text-xs text-gray-600">.DOC, .DOCX, .PDF</p>
+              </div>
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="text-2xl mb-2">☁️</div>
+                <h4 class="font-semibold text-sm mb-1">Tamaño Máximo</h4>
+                <p class="text-xs text-gray-600">Hasta 100MB por archivo</p>
+              </div>
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="text-2xl mb-2">🔒</div>
+                <h4 class="font-semibold text-sm mb-1">Seguridad</h4>
+                <p class="text-xs text-gray-600">100% Confidencial</p>
+              </div>
+            </div>
+
+            <!-- Instrucciones -->
+            <div class="bg-blue-50 rounded-lg p-6 mb-6">
+              <h4 class="font-semibold text-primary-dark mb-3">📋 Cómo funciona:</h4>
+              <ol class="text-sm text-gray-700 space-y-2 text-left max-w-md mx-auto">
+                <li class="flex items-start"><span class="font-semibold text-primary mr-2">1.</span>Haz clic en el botón de abajo</li>
+                <li class="flex items-start"><span class="font-semibold text-primary mr-2">2.</span>Se abrirá Google Forms en una nueva pestaña</li>
+                <li class="flex items-start"><span class="font-semibold text-primary mr-2">3.</span>Completa el formulario y adjunta tu manuscrito</li>
+                <li class="flex items-start"><span class="font-semibold text-primary mr-2">4.</span>Recibirás confirmación por email al enviarlo</li>
+              </ol>
+            </div>
+
+            <!-- Botón principal -->
+            <Button
+              id="open-manuscript-form"
+              variant="primary"
+              size="lg"
+              class="text-lg px-8 py-4 mb-4"
+              type="button"
+            >
+              📝 Abrir Formulario de Manuscrito
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+            </Button>
+            <p class="text-sm text-gray-500">
+              Al hacer clic, se abrirá Google Forms en una nueva pestaña segura
+            </p>
+          </div>
+        </Card>
+
+        <!-- Alternativa por email -->
+        <Card variant="outlined" class="bg-amber-50 border border-amber-200">
+          <div class="p-6">
+            <h3 class="font-semibold text-primary-dark mb-3">📮 ¿Prefieres envío por email?</h3>
+            <p class="text-sm text-gray-700 mb-4">
+              Si tienes problemas con el formulario, puedes enviarnos un correo y adjuntar tu manuscrito. Toca el email para abrir tu app de correo (en móvil) o copia los datos con los botones.
+            </p>
+            <div class="text-center mb-4">
+              <p class="text-sm">Email:</p>
+              <a class="text-primary underline font-medium break-all" href={`mailto:${emailGeneral}`}>{emailGeneral}</a>
+            </div>
+            <div class="flex flex-wrap justify-center gap-3">
+              <Button
+                variant="secondary"
+                id="copy-email-btn"
+                class="text-sm"
+                type="button"
+              >
+                📋 Copiar email
+              </Button>
+              <Button
+                variant="ghost"
+                id="copy-template-btn"
+                class="text-sm"
+                type="button"
+              >
+                🧩 Copiar plantilla recomendada
+              </Button>
+            </div>
+            <p class="text-[12px] text-gray-500 mt-3 text-center">
+              Consejos: formato .doc, .docx o .pdf • Máx. 25 MB por correo • Incluye sinopsis breve.
+            </p>
+          </div>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal de Confirmación -->
+  <div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white rounded-lg max-w-md w-full shadow-2xl">
+        <div class="p-6">
+          <div class="text-center">
+            <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-primary-dark mb-4">¡Perfecto! Abriendo formulario…</h3>
+            <p class="text-gray-600 mb-6 text-sm">
+              Se abrirá Google Forms en una nueva pestaña. Si no se abre automáticamente, haz clic en "Continuar".
+            </p>
+            <div class="space-y-3">
+              <Button
+                id="proceed-btn"
+                variant="primary"
+                class="w-full"
+                type="button"
+              >
+                ✅ Continuar al Formulario
+              </Button>
+              <Button
+                id="cancel-btn"
+                variant="secondary"
+                class="w-full"
+                type="button"
+              >
+                ❌ Cancelar
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Config para el script -->
+  <div id="form-config" data-form-url={GOOGLE_FORM_URL} data-email={emailGeneral} hidden></div>
+</BaseLayout>
+
+<!-- JavaScript -->
+<script is:inline>
+  (function () {
+    const openBtn = document.getElementById('open-manuscript-form');
+    const modal = document.getElementById('confirmation-modal');
+    const proceedBtn = document.getElementById('proceed-btn');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const copyEmailBtn = document.getElementById('copy-email-btn');
+    const copyTplBtn = document.getElementById('copy-template-btn');
+    
+    // Obtener configuración desde data attributes
+    const config = document.getElementById('form-config');
+    const FORM_URL = config?.getAttribute('data-form-url') || '';
+    const EMAIL = config?.getAttribute('data-email') || 'info@eldoradocasaeditorial.com';
+
+    // Plantilla sugerida para el cuerpo del correo
+    const EMAIL_TEMPLATE = `Hola,
+
+adjunto envío mi manuscrito para evaluación editorial.
+
+=== DATOS DEL AUTOR ===
+Nombre completo: 
+Correo electrónico: 
+Teléfono: 
+País de residencia: 
+
+=== DATOS DE LA OBRA ===
+Título de la obra: 
+Subtítulo (si aplica): 
+Género literario: 
+Número de palabras aproximado: 
+Estado de la obra: [Terminada/Borrador/En proceso]
+
+=== SINOPSIS ===
+[Escribe aquí tu sinopsis - máximo 500 palabras]
+
+=== EXPERIENCIA EDITORIAL ===
+¿Has publicado anteriormente?: [Sí/No]
+Detalles de publicaciones previas: 
+
+=== INFORMACIÓN ADICIONAL ===
+[Cualquier información relevante sobre tu obra]
+
+— Importante —
+• Formato: .doc, .docx o .pdf
+• Tamaño máx. recomendado por email: 25 MB
+
+¡Gracias!`;
+
+    // Función para abrir en nueva pestaña
+    function openFormInNewTab() {
+      if (!FORM_URL) {
+        console.error('No se encontró la URL del formulario');
+        return false;
+      }
+      
+      try {
+        const newTab = window.open(FORM_URL, '_blank', 'noopener,noreferrer');
+        
+        // Verificar si se bloqueó la ventana emergente
+        if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') {
+          return false; // No se pudo abrir
+        }
+        
+        return true; // Se abrió correctamente
+      } catch (error) {
+        console.error('Error al abrir nueva pestaña:', error);
+        return false;
+      }
+    }
+
+    // Abrir modal de confirmación
+    openBtn && openBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      modal?.classList.remove('hidden');
+    });
+
+    // Continuar al formulario
+    proceedBtn && proceedBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const success = openFormInNewTab();
+      
+      if (success) {
+        // Se abrió correctamente en nueva pestaña
+        modal?.classList.add('hidden');
+      } else {
+        // No se pudo abrir en nueva pestaña, mostrar opciones
+        const userChoice = confirm(
+          '⚠️ Tu navegador bloqueó la ventana emergente.\n\n' +
+          '• OK: Abrir en esta pestaña\n' +
+          '• Cancelar: Volver al formulario'
+        );
+        
+        if (userChoice) {
+          // El usuario eligió abrir en la pestaña actual
+          window.location.href = FORM_URL;
+        } else {
+          // El usuario canceló, cerrar modal
+          modal?.classList.add('hidden');
+        }
+      }
+    });
+
+    // Cancelar
+    cancelBtn && cancelBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      modal?.classList.add('hidden');
+    });
+
+    // Cerrar modal haciendo clic fuera
+    modal && modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+      }
+    });
+
+    // Cerrar modal con Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal?.classList.contains('hidden')) {
+        modal.classList.add('hidden');
+      }
+    });
+
+    // Copiar email
+    copyEmailBtn && copyEmailBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        await navigator.clipboard.writeText(EMAIL);
+        alert('✅ Email copiado al portapapeles.');
+      } catch (error) {
+        console.error('Error al copiar email:', error);
+        alert(`📋 Copia manual: ${EMAIL}`);
+      }
+    });
+
+    // Copiar plantilla
+    copyTplBtn && copyTplBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        await navigator.clipboard.writeText(EMAIL_TEMPLATE);
+        alert('✅ Plantilla copiada. ¡Pégala en tu correo!');
+      } catch (error) {
+        console.error('Error al copiar plantilla:', error);
+        alert('📋 No se pudo copiar automáticamente. Copia manual:\n\n' + EMAIL_TEMPLATE);
+      }
+    });
+
+  })();
+</script>
+
+<style>
+  /* Animación suave del modal */
+  #confirmation-modal {
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.25s ease-out;
+  }
+  
+  #confirmation-modal > div > div {
+    animation: slideUp 0.25s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from { 
+      opacity: 0; 
+      transform: translateY(18px); 
+    }
+    to { 
+      opacity: 1; 
+      transform: none; 
+    }
+  }
+</style>

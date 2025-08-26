@@ -1,0 +1,183 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/ui/Card.astro';
+import Button from '../components/ui/Button.astro';
+import CallToAction from '../components/sections/CallToAction.astro';
+import { siteData, servicesData, getServicesByCategory } from '../utils/data';
+
+// Datos desde JSON
+const mainServices = [
+  ...getServicesByCategory('editorial'),
+  ...getServicesByCategory('design'),
+  ...getServicesByCategory('legal'),
+  ...getServicesByCategory('translation'), // 👈 añadido aquí
+];
+const promotionServices = getServicesByCategory('promotion');
+const specialServices = getServicesByCategory('special_production');
+const processSteps = servicesData.process;
+---
+
+<BaseLayout 
+  title={`Servicios Editoriales - ${siteData.name}`}
+  description="Descubre nuestros servicios editoriales integrales: desde la edición de contenido hasta el marketing editorial. Convertimos tu manuscrito en una obra de excelencia."
+>
+  <!-- Hero Section -->
+  <section class="section bg-gradient-to-br from-bg-primary to-bg-secondary">
+    <div class="container">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-hero text-gradient-primary mb-6">Servicios Editoriales</h1>
+        <p class="text-lead mb-8">Acompañamos tu obra desde el manuscrito hasta su llegada a los lectores</p>
+        <p class="text-xl text-text-secondary mb-12 max-w-2xl mx-auto">
+          Con nuestro servicio integral, transformamos tu idea en un libro de calidad profesional, 
+          cuidando cada detalle del proceso editorial.
+        </p>
+        <Button variant="primary" size="lg" href="#servicios">Explorar Servicios</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proceso Editorial -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-display font-bold text-primary-dark mb-4">Nuestro Proceso Editorial</h2>
+        <p class="text-xl text-text-secondary max-w-2xl mx-auto">
+          Un acompañamiento completo que garantiza la excelencia en cada etapa.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-8">
+        {processSteps.map((step) => (
+          <div class="text-center">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl">{step.icon}</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">{step.step}. {step.title}</h3>
+            <p class="text-text-secondary">{step.description}</p>
+            {step.time && (
+              <p class="text-xs text-text-muted mt-2">Tiempo estimado: {step.time}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios Principales -->
+  <section id="servicios" class="section bg-bg-secondary">
+    <div class="container">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-display font-bold text-primary-dark mb-4">Servicios Principales</h2>
+        <p class="text-xl text-text-secondary max-w-2xl mx-auto">
+          Cada servicio está diseñado para elevar la calidad de tu publicación.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {mainServices.map((servicio) => (
+          <Card variant="elevated" hover={true}>
+            <div class="flex items-start space-x-4 mb-4">
+              <div class="text-3xl">{servicio.icono}</div>
+              <div class="flex-1">
+                <h3 class="text-xl font-display font-semibold text-primary-dark mb-2">
+                  {servicio.titulo}
+                </h3>
+                <p class="text-text-secondary mb-4">{servicio.descripcion}</p>
+
+                {servicio.formatos?.length > 0 && (
+                  <div class="flex flex-wrap gap-2">
+                    {servicio.formatos.map((formato) => (
+                      <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded">{formato}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Promoción y Visibilidad -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-display font-bold text-primary-dark mb-4">Promoción y Visibilidad</h2>
+        <p class="text-xl text-text-secondary max-w-2xl mx-auto">
+          Estrategias profesionales para dar a conocer tu obra.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {promotionServices.map((servicio) => (
+          <Card variant="outlined" hover={true}>
+            <div class="text-center">
+              <div class="text-3xl mb-3">{servicio.icono}</div>
+              <h3 class="text-lg font-display font-semibold text-primary-dark mb-2">
+                {servicio.titulo}
+              </h3>
+              <p class="text-text-secondary text-sm mb-3">{servicio.descripcion}</p>
+              {servicio.formatos?.length > 0 && (
+                <div class="flex flex-wrap justify-center gap-1 mb-4">
+                  {servicio.formatos.map((formato) => (
+                    <span class="px-2 py-1 bg-accent/10 text-accent text-xs rounded">{formato}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Producción Especial -->
+  <section class="section bg-bg-secondary">
+    <div class="container">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-display font-bold text-primary-dark mb-4">Producción Especial</h2>
+        <p class="text-xl text-text-secondary max-w-2xl mx-auto">
+          Proyectos únicos para necesidades específicas.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        {specialServices.map((servicio) => (
+          <Card variant="elevated" hover={true}>
+            <div class="text-center">
+              <div class="text-4xl mb-4">{servicio.icono}</div>
+              <h3 class="text-xl font-display font-semibold text-primary-dark mb-3">
+                {servicio.titulo}
+              </h3>
+              <p class="text-text-secondary mb-6">{servicio.descripcion}</p>
+              {servicio.formatos?.length > 0 && (
+                <div class="flex flex-wrap justify-center gap-1">
+                  {servicio.formatos.map((formato) => (
+                    <span class="px-2 py-1 bg-gold/10 text-gold text-xs rounded">{formato}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Final -->
+  <CallToAction
+    title="¿Listo para transformar tu manuscrito?"
+    description="Contacta con nuestro equipo y descubre cómo podemos hacer realidad tu proyecto editorial."
+    primaryButton={{
+      text: siteData.cta.primary,
+      href: "/enviar-manuscrito",
+      variant: "gold"
+    }}
+    secondaryButton={{
+      text: "Hablar con un Experto", 
+      href: "/contacto",
+      variant: "ghost"
+    }}
+  />
+</BaseLayout>

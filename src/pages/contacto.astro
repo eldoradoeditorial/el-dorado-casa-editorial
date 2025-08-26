@@ -1,0 +1,542 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/ui/Card.astro';
+import Input from '../components/ui/Input.astro';
+import Button from '../components/ui/Button.astro';
+import { siteData } from '../utils/data';
+
+// =====================
+// Datos del sitio
+// =====================
+const emailGeneral = siteData.contact?.email ?? 'info@eldoradocasaeditorial.com';
+const hours        = siteData.contact?.hours ?? 'Lunes a Viernes: 9:00 AM - 6:00 PM (GMT-5)';
+const locations    = siteData.contact?.locations ?? [];
+const social       = siteData.social ?? {};
+
+// "Las Vegas, EE.UU. / Medellín, Colombia"
+const locationsStr = locations.length
+  ? locations.map((l) => `${l.city}, ${l.country}`).join(' / ')
+  : 'Medellín, Colombia / Las Vegas, EE.UU.';
+
+// Primer lugar para Google Maps (si hay)
+const firstLoc = locations[0] ? `${locations[0].city}, ${locations[0].country}` : 'Medellín, Colombia';
+const gmapsUrl = firstLoc
+  ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(firstLoc)}`
+  : 'https://maps.google.com';
+
+// =====================
+// Tarjetas de contacto (generadas con los campos nuevos)
+// =====================
+const contactCards = [
+  {
+    titulo: 'Ubicación',
+    icono: '📍',
+    detalles: [locationsStr],
+    link: gmapsUrl
+  },
+  {
+    titulo: 'Correo Electrónico',
+    icono: '✉️',
+    detalles: [emailGeneral],
+    link: `mailto:${emailGeneral}`
+  },
+  {
+    titulo: 'Horario',
+    icono: '🕘',
+    detalles: [hours]
+  },
+  {
+    titulo: 'Redes Sociales',
+    icono: '🌐',
+    detalles: [
+      social.handle && `${social.handle}`,
+      [
+        social.facebook && 'Facebook',
+        social.instagram && 'Instagram', 
+        social.twitter && 'X'
+      ].filter(Boolean).join(' | ') || 'Síguenos en redes'
+    ].filter(Boolean)
+  }
+];
+
+// Departamentos del formulario
+const departamentos = [
+  { value: 'general',       label: 'Consulta General' },
+  { value: 'manuscritos',   label: 'Envío de Manuscritos' },
+  { value: 'servicios',     label: 'Servicios Editoriales' },
+  { value: 'marketing',     label: 'Marketing y Promoción' },
+  { value: 'distribucion',  label: 'Distribución y Ventas' },
+  { value: 'prensa',        label: 'Prensa y Medios' },
+  { value: 'empleo',        label: 'Oportunidades Laborales' },
+  { value: 'otros',         label: 'Otros' }
+];
+
+// WhatsApp URL - Flexible para diferentes estructuras de datos
+const whatsappNumber = siteData.contact.whatsapp;
+const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/[^\d]/g, '')}?text=Hola,%20me%20interesa%20conocer%20más%20sobre%20sus%20servicios%20editoriales.`;
+---
+
+<BaseLayout 
+  title={`Contacto - ${siteData.name}`}
+  description="Ponte en contacto con El Dorado Casa Editorial. Estamos aquí para ayudarte con tu proyecto editorial, manuscrito o cualquier consulta."
+>
+  <!-- Hero Section -->
+  <section class="section bg-gradient-to-br from-bg-primary to-bg-secondary">
+    <div class="container">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-hero text-gradient-primary mb-6">Contacto</h1>
+        <p class="text-lead mb-8">Estamos aquí para ayudarte a convertir tu obra en un tesoro literario</p>
+        <p class="text-xl text-text-secondary mb-12 max-w-2xl mx-auto">
+          Escríbenos a
+          <a class="text-primary underline font-medium" href={`mailto:${emailGeneral}`}>{emailGeneral}</a>
+          <br />Horario: {hours}
+          <br />Ubicación: {locationsStr}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Información de Contacto -->
+  <section class="section">
+    <div class="container">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        {contactCards.map((info) => (
+          <Card variant="outlined" hover={true}>
+            <div class="text-center">
+              <div class="text-4xl mb-4">{info.icono}</div>
+              <h3 class="text-xl font-display font-semibold text-primary-dark mb-4">
+                {info.titulo}
+              </h3>
+              <div class="space-y-2">
+                {info.detalles.map((detalle) => (
+                  info.link ? (
+                    <a 
+                      href={info.link} 
+                      class="block text-text-secondary text-sm hover:text-primary transition-colors"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {detalle}
+                    </a>
+                  ) : (
+                    <p class="text-text-secondary text-sm">{detalle}</p>
+                  )
+                ))}
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Formulario de Contacto -->
+  <section class="section bg-bg-secondary">
+    <div class="container">
+      <div class="grid lg:grid-cols-2 gap-12">
+        <!-- Formulario -->
+        <div>
+          <h2 class="text-3xl font-display font-bold text-primary-dark mb-6">Envíanos un Mensaje</h2>
+          <p class="text-text-secondary mb-8">
+            Completa el formulario y nos pondremos en contacto contigo en menos de 24 horas.
+          </p>
+
+          <!-- ✅ NETLIFY FORMS: Atributos clave -->
+          <form 
+            id="contact-form" 
+            name="contacto"
+            method="POST"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+            class="space-y-6"
+          >
+            <!-- Campo honeypot oculto para anti-spam -->
+            <input type="hidden" name="form-name" value="contacto" />
+            <div style="display: none">
+              <label>No llenar si eres humano: <input name="bot-field" /></label>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-text-primary">
+                  Nombre completo <span class="text-red-500 ml-1">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="nombre"
+                  required
+                  placeholder="Tu nombre"
+                  class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </div>
+              
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-text-primary">
+                  Correo electrónico <span class="text-red-500 ml-1">*</span>
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="tu@email.com"
+                  class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-text-primary">
+                  Teléfono
+                </label>
+                <input
+                  type="tel"
+                  name="telefono"
+                  placeholder="+57 300 123 4567"
+                  class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </div>
+              
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-text-primary">
+                  Departamento <span class="text-red-500 ml-1">*</span>
+                </label>
+                <select 
+                  name="departamento"
+                  required
+                  class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                >
+                  <option value="">Selecciona un departamento</option>
+                  {departamentos.map((dept) => (
+                    <option value={dept.value}>{dept.label}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-text-primary">
+                Asunto <span class="text-red-500 ml-1">*</span>
+              </label>
+              <input
+                type="text"
+                name="asunto"
+                required
+                placeholder="¿En qué podemos ayudarte?"
+                class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              />
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-text-primary">
+                Mensaje <span class="text-red-500 ml-1">*</span>
+              </label>
+              <textarea
+                name="mensaje"
+                required
+                rows="6"
+                placeholder="Cuéntanos sobre tu proyecto o consulta..."
+                class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-vertical"
+              ></textarea>
+            </div>
+
+            <!-- Información adicional oculta para contexto -->
+            <input type="hidden" name="fecha" id="fecha-envio" />
+            <input type="hidden" name="pagina" value="Contacto" />
+
+            <div class="flex items-start space-x-3">
+              <input
+                type="checkbox"
+                id="privacidad"
+                name="privacidad"
+                required
+                class="mt-1 w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+              />
+              <label for="privacidad" class="text-sm text-text-secondary">
+                He leído y acepto la 
+                <a href="/politica-privacidad" class="text-primary hover:underline">Política de Privacidad</a> 
+                y autorizo el tratamiento de mis datos personales. <span class="text-red-500">*</span>
+              </label>
+            </div>
+
+            <Button id="submit-btn" type="submit" variant="primary" size="lg" class="w-full">
+              <span id="btn-text">Enviar Mensaje</span>
+              <svg id="btn-loading" class="hidden w-5 h-5 ml-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2v4m0 12v4m8-8h-4M4 12H0m15.364-7.364L12.636 7.364m0 9.272l2.728 2.728M4.636 4.636l2.728 2.728m0 9.272L4.636 19.364"/>
+              </svg>
+            </Button>
+
+            <!-- Mensaje de estado -->
+            <div id="form-message" class="hidden p-4 rounded-lg text-sm"></div>
+          </form>
+        </div>
+
+        <!-- Información adicional -->
+        <div>
+          <h2 class="text-3xl font-display font-bold text-primary-dark mb-6">¿Prefieres contacto directo?</h2>
+          <div class="space-y-6">
+            <Card variant="elevated">
+              <div class="flex items-start space-x-4">
+                <div class="text-2xl">📞</div>
+                <div>
+                  <h4 class="font-semibold text-primary-dark mb-2">Coordina una llamada</h4>
+                  <p class="text-text-secondary mb-4">
+                    Escríbenos por WhatsApp y agenda una llamada de 30 minutos para discutir tu proyecto editorial.
+                  </p>
+                  <a
+                    href={whatsappUrl.replace('me%20interesa%20conocer%20más%20sobre%20sus%20servicios%20editoriales', 'gustaría%20coordinar%20una%20llamada%20para%20discutir%20mi%20proyecto%20editorial')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center font-medium rounded-xl transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 px-4 py-2 text-sm bg-transparent border-2 border-accent text-accent hover:bg-accent hover:text-white focus-visible:ring-accent"
+                  >
+                    Escribir por WhatsApp
+                  </a>
+                </div>
+              </div>
+            </Card>
+
+            <Card variant="elevated">
+              <div class="flex items-start space-x-4">
+                <div class="text-2xl">💬</div>
+                <div>
+                  <h4 class="font-semibold text-primary-dark mb-2">WhatsApp</h4>
+                  <p class="text-text-secondary mb-4">
+                    ¿Tienes una pregunta rápida? Escríbenos por WhatsApp y te responderemos durante horario laboral.
+                  </p>
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center font-medium rounded-xl transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 px-4 py-2 text-sm bg-transparent border-2 border-accent text-accent hover:bg-accent hover:text-white focus-visible:ring-accent"
+                  >
+                    Escribir por WhatsApp
+                  </a>
+                </div>
+              </div>
+            </Card>
+
+            <Card variant="elevated" class="bg-blue-50 border border-blue-200">
+              <div class="flex items-start space-x-4">
+                <div class="text-2xl">⚡</div>
+                <div>
+                  <h4 class="font-semibold text-primary-dark mb-2">Respuesta Rápida</h4>
+                  <p class="text-text-secondary mb-2">
+                    <strong>Horario:</strong> {hours}
+                  </p>
+                  <p class="text-text-secondary text-sm">
+                    📧 Email: 2-4 horas<br/>
+                    📱 WhatsApp: 30 minutos<br/>
+                    📞 Llamada: Misma semana
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          <!-- FAQ Rápido -->
+          <div class="mt-12">
+            <h3 class="text-xl font-display font-semibold text-primary-dark mb-4">Preguntas Frecuentes</h3>
+            <div class="space-y-4">
+              <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer text-text-primary hover:text-primary transition-colors">
+                  <span class="font-medium">¿Cuánto tiempo toma la evaluación de un manuscrito?</span>
+                  <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </summary>
+                <p class="mt-2 text-text-secondary text-sm">
+                  Entre 5 a 10 días hábiles. Te enviaremos un reporte detallado con recomendaciones profesionales.
+                </p>
+              </details>
+              
+              <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer text-text-primary hover:text-primary transition-colors">
+                  <span class="font-medium">¿Ofrecen servicios de autopublicación?</span>
+                  <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </summary>
+                <p class="mt-2 text-text-secondary text-sm">
+                  Sí, ofrecemos paquetes completos: edición, diseño de portada, maquetación, ISBN, distribución en Amazon y librerías.
+                </p>
+              </details>
+              
+              <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer text-text-primary hover:text-primary transition-colors">
+                  <span class="font-medium">¿Trabajan con autores internacionales?</span>
+                  <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </summary>
+                <p class="mt-2 text-text-secondary text-sm">
+                  ¡Absolutamente! Trabajamos con autores de toda Latinoamérica, Estados Unidos y España de forma 100% remota.
+                </p>
+              </details>
+
+              <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer text-text-primary hover:text-primary transition-colors">
+                  <span class="font-medium">¿Cuáles son sus tarifas?</span>
+                  <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </summary>
+                <p class="mt-2 text-text-secondary text-sm">
+                  Nuestros servicios son personalizados según tu proyecto. Contáctanos para recibir una cotización detallada sin compromiso.
+                </p>
+              </details>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<!-- JavaScript mejorado para Netlify Forms -->
+<script is:inline>
+  (function() {
+    const form = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const btnLoading = document.getElementById('btn-loading');
+    const formMessage = document.getElementById('form-message');
+    const fechaInput = document.getElementById('fecha-envio');
+
+    // Establecer fecha actual
+    if (fechaInput) {
+      fechaInput.value = new Date().toLocaleString('es-CO', {
+        timeZone: 'America/Bogota',
+        year: 'numeric',
+        month: '2-digit', 
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    function showMessage(message, type = 'success') {
+      formMessage.className = `p-4 rounded-lg text-sm ${
+        type === 'success' 
+          ? 'bg-green-50 border border-green-200 text-green-800' 
+          : 'bg-red-50 border border-red-200 text-red-800'
+      }`;
+      formMessage.textContent = message;
+      formMessage.classList.remove('hidden');
+      
+      // Auto-ocultar después de 5 segundos
+      setTimeout(() => {
+        formMessage.classList.add('hidden');
+      }, 5000);
+    }
+
+    function setLoading(loading) {
+      submitBtn.disabled = loading;
+      if (loading) {
+        btnText.textContent = 'Enviando...';
+        btnLoading.classList.remove('hidden');
+      } else {
+        btnText.textContent = 'Enviar Mensaje';
+        btnLoading.classList.add('hidden');
+      }
+    }
+
+    // Validación en tiempo real
+    form.addEventListener('input', function(e) {
+      const target = e.target;
+      if (target.hasAttribute('required') && target.value.trim()) {
+        target.classList.remove('border-red-300');
+        target.classList.add('border-green-300');
+      }
+    });
+
+    // Manejo del envío del formulario
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Validación básica
+      const requiredFields = form.querySelectorAll('[required]');
+      let isValid = true;
+      
+      requiredFields.forEach(field => {
+        if (!field.value.trim() || (field.type === 'checkbox' && !field.checked)) {
+          field.classList.add('border-red-300');
+          isValid = false;
+        }
+      });
+
+      if (!isValid) {
+        showMessage('Por favor, completa todos los campos obligatorios.', 'error');
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        // Envío a Netlify
+        const formData = new FormData(form);
+        
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData).toString()
+        });
+
+        if (response.ok) {
+          showMessage('¡Mensaje enviado exitosamente! Nos pondremos en contacto contigo dentro de 24 horas.', 'success');
+          form.reset();
+          
+          // Evento de analytics (si tienes GA configurado)
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'form_submit', {
+              event_category: 'engagement',
+              event_label: 'contact_form'
+            });
+          }
+          
+        } else {
+          throw new Error('Error en el servidor');
+        }
+        
+      } catch (error) {
+        console.error('Error al enviar formulario:', error);
+        showMessage('Error al enviar el mensaje. Por favor, intenta nuevamente o escríbenos directamente al email.', 'error');
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    // Mejorar UX del checkbox
+    const privacidadCheckbox = document.getElementById('privacidad');
+    privacidadCheckbox?.addEventListener('change', function() {
+      const label = this.nextElementSibling;
+      if (this.checked) {
+        label.classList.remove('text-red-500');
+        label.classList.add('text-gray-700');
+      }
+    });
+
+  })();
+</script>
+
+<style>
+  /* Mejoras visuales para el formulario */
+  .form-field:focus-within {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+  
+  details[open] summary {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Loading animation */
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>

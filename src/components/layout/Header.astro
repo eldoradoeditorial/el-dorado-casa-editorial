@@ -1,0 +1,170 @@
+---
+import Button from "../ui/Button.astro";
+import { siteData, getLocationsString } from '../../utils/data';
+
+
+const currentPath = Astro.url.pathname;
+
+// Conveniencia
+const nav = siteData.navigation || [];
+const email = siteData.contact.email;
+const cityCountry = getLocationsString(); 
+const social = siteData.social || {};
+---
+<header class="bg-primary-dark shadow-lg sticky top-0 z-50">
+  <div class="container">
+
+    <!-- Top bar -->
+    <div class="hidden lg:flex justify-between items-center py-2 text-sm border-b border-white/10">
+      <!-- Email + Ubicación -->
+      <div class="flex items-center gap-6">
+        <a
+          href={`mailto:${email}`}
+          class="flex items-center text-white/70 hover:text-gold transition-colors"
+        >
+          <svg class="w-4 h-4 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path d="M2 4.5A2.5 2.5 0 0 1 4.5 2h11A2.5 2.5 0 0 1 18 4.5v11A2.5 2.5 0 0 1 15.5 18h-11A2.5 2.5 0 0 1 2 15.5v-11Zm1.8.3 6.2 4.65L16.2 4.8a.8.8 0 0 0-.7-.3H4.5a.8.8 0 0 0-.7.3ZM17 6.3l-6.47 4.84a1 1 0 0 1-1.06 0L3 6.3v9.2c0 .44.36.8.8.8h11.4c.44 0 .8-.36.8-.8V6.3Z" />
+          </svg>
+          {email}
+        </a>
+
+        <span class="flex items-center text-white/70">
+          <svg class="w-4 h-4 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path d="M10 2a6.5 6.5 0 0 0-6.5 6.5c0 4.2 6.1 9.1 6.4 9.3a.9.9 0 0 0 1.2 0c.3-.2 6.4-5.1 6.4-9.3A6.5 6.5 0 0 0 10 2Zm0 9.2A2.7 2.7 0 1 1 10 5.8a2.7 2.7 0 0 1 0 5.4Z"/>
+          </svg>
+          {cityCountry}
+        </span>
+      </div>
+
+      <!-- Redes -->
+      <div class="flex items-center gap-4">
+        {social.facebook && (
+          <a
+            href={social.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-white/70 hover:text-gold transition-colors"
+            aria-label="Facebook"
+            title="Facebook"
+          >
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.86c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.19 2.24.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.77l-.44 2.9h-2.33v7.03C18.34 21.21 22 17.06 22 12.06Z"/>
+            </svg>
+          </a>
+        )}
+
+        {social.instagram && (
+          <a
+            href={social.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-white/70 hover:text-gold transition-colors"
+            aria-label="Instagram"
+            title="Instagram"
+          >
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+             <path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 5a5 5 0 100 10 5 5 0 000-10zm0 2.2a2.8 2.8 0 110 5.6 2.8 2.8 0 010-5.6zM18 6.5a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z"/>
+            </svg>
+          </a>
+        )}
+
+        {social.twitter && (
+          <a
+            href={social.twitter}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-white/70 hover:text-gold transition-colors"
+            aria-label="X"
+            title="X"
+          >
+            <!-- Logomark de X en fill para coherencia visual -->
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M3 3h3l6 7.5L18 3h3l-7.3 9.3L21 21h-3l-6-7.7L6 21H3l7.4-9.5L3 3z"/>
+            </svg>
+          </a>
+        )}
+      </div>
+    </div>
+
+    <!-- Main nav -->
+    <nav class="flex items-center justify-between py-4">
+      <!-- Logo -->
+      <a href="/" class="flex items-center space-x-3">
+        <img
+          src="/images/logos/logo.svg"
+          alt="El Dorado - logo"
+          class="block h-10 w-auto shrink-0"
+          loading="eager"
+          decoding="async"
+        />
+        <div>
+          <div class="font-display font-bold text-xl text-white">El Dorado</div>
+          <div class="text-sm text-white/70">Servicios Editoriales</div>
+        </div>
+      </a>
+
+      <!-- Desktop items -->
+      <div class="hidden lg:flex items-center space-x-8">
+        {nav.map((item) => (
+          <a
+            href={item.href}
+            class={`px-3 py-2 rounded-md text-base font-medium transition-colors ${
+              currentPath === item.href
+                ? "text-gold bg-white/10"
+                : "text-white hover:text-gold hover:bg-white/5"
+            }`}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+
+      <!-- CTA -->
+      <div class="hidden lg:flex items-center">
+        <Button
+          variant="primary"
+          size="sm"
+          href="/enviar-manuscrito"
+          class="bg-accent hover:bg-accent-hover text-white"
+        >
+          Enviar Manuscrito
+        </Button>
+      </div>
+
+      <!-- Mobile menu -->
+      <details class="lg:hidden">
+        <summary class="list-none p-2 rounded-md text-white hover:text-gold hover:bg-white/5 cursor-pointer">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </summary>
+        <div class="border-t border-white/10 py-4 mt-2">
+          <div class="space-y-2">
+            {nav.map((item) => (
+              <a
+                href={item.href}
+                class={`block px-4 py-3 text-base font-medium transition-colors ${
+                  currentPath === item.href
+                    ? "text-gold bg-white/10"
+                    : "text-white hover:text-gold hover:bg-white/5"
+                }`}
+              >
+                {item.label}
+              </a>
+            ))}
+            <div class="px-4 pt-4 border-t border-white/10">
+              <Button
+                variant="primary"
+                size="sm"
+                href="/enviar-manuscrito"
+                class="w-full bg-accent hover:bg-accent-hover text-white"
+              >
+                Enviar Manuscrito
+              </Button>
+            </div>
+          </div>
+        </div>
+      </details>
+    </nav>
+  </div>
+</header>

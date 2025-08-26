@@ -1,0 +1,115 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Card from "../../components/ui/Card.astro";
+import Button from "../../components/ui/Button.astro";
+import Badge from "../../components/ui/Badge.astro";
+import {
+  siteData,
+  booksData,
+  getBookById,
+  formatPrice,
+  getPurchaseHref,
+  getBookCover,
+} from "../../utils/data";
+
+/** Genera todas las rutas /catalogo/:id a partir del JSON */
+export async function getStaticPaths() {
+  return booksData.catalog.map((book) => ({
+    params: { id: book.id },
+  }));
+}
+
+const { id } = Astro.params;
+const book = getBookById(String(id));
+
+if (!book) {
+  // Si el id no existe en el JSON, detén el render (puedes reemplazar por una 404 propia)
+  throw new Error("Libro no encontrado");
+}
+
+const purchaseHref = getPurchaseHref(book);
+---
+
+<BaseLayout
+  title={`${book.titulo} - ${siteData.shortName}`}
+  description={book.sinopsis}
+  type="book"
+>
+  <section class="section">
+    <div class="container">
+      <div class="grid lg:grid-cols-12 gap-10 items-start">
+        <!-- Portada -->
+        <div class="lg:col-span-4">
+          <Card class="overflow-hidden">
+            <img
+              src={getBookCover(book)}
+              alt={`Portada: ${book.titulo}`}
+              class="w-full h-auto block"
+              loading="eager"
+              decoding="async"
+              onerror="this.onerror=null;this.src='/images/books/placeholder.svg';"
+            />
+          </Card>
+        </div>
+
+        <!-- Detalles -->
+        <div class="lg:col-span-8 space-y-6">
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <Badge variant="secondary">{book.genero}</Badge>
+              <span class="text-text-muted">{book.año}</span>
+              {
+                book.featured && (
+                  <span class="text-gold text-sm">★ Recomendado</span>
+                )
+              }
+            </div>
+            <h1 class="text-4xl font-display font-bold text-primary-dark mb-2">
+              {book.titulo}
+            </h1>
+            <p class="text-text-secondary">por <strong>{book.autor}</strong></p>
+          </div>
+
+          <p class="text-text-primary leading-relaxed whitespace-pre-line">
+            {book.sinopsis}
+          </p>
+
+          {
+            (book.idioma || (book.formato && book.formato.length)) && (
+              <div class="grid md:grid-cols-2 gap-3 text-sm text-text-secondary">
+                {book.idioma && (
+                  <div>
+                    <strong>Idioma:</strong> {book.idioma}
+                  </div>
+                )}
+                {book.formato?.length && (
+                  <div>
+                    <strong>Formato:</strong> {book.formato.join(", ")}
+                  </div>
+                )}
+              </div>
+            )
+          }
+
+          <div class="flex items-center gap-6 pt-4 border-t border-gray-100">
+            <div class="text-2xl font-semibold text-gold">
+              {formatPrice(book.precio)}
+            </div>
+            <div class="flex gap-3">
+              <Button
+                variant="primary"
+                href={purchaseHref}
+                target={purchaseHref?.startsWith("http") ? "_blank" : undefined}
+              >
+                Comprar
+              </Button>
+              <Button variant="secondary" href="/catalogo"
+                >Volver al catálogo</Button
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

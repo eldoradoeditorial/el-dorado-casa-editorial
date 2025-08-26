@@ -1,0 +1,214 @@
+{
+  "editorial": [
+    {
+      "id": "maquetacion",
+      "titulo": "Maquetación y Diagramación Profesional",
+      "categoria": "Editorial",
+      "descripcion": "Organización visual del texto e imágenes para garantizar una lectura cómoda y atractiva, adaptada a formatos físicos y electrónicos.",
+      "formatos": ["Impreso", "Digital", "EPUB", "MOBI", "PDF"],
+      "icono": "📐"
+    },
+    {
+      "id": "correccion",
+      "titulo": "Corrección Ortotipográfica y de Estilo",
+      "categoria": "Editorial",
+      "descripcion": "Revisión ortográfica, gramatical y de normas tipográficas, así como mejora del estilo para lograr un texto fluido y coherente.",
+      "formatos": ["Ortografía", "Gramática", "Estilo"],
+      "icono": "✏️"
+    },
+    {
+      "id": "edicion-contenido",
+      "titulo": "Edición de Contenido",
+      "categoria": "Editorial",
+      "descripcion": "Análisis y mejora profunda de la estructura, ritmo y desarrollo de ideas o trama para potenciar la obra.",
+      "formatos": ["Reestructuración", "Coherencia", "Narrativa"],
+      "icono": "📝"
+    },
+    {
+      "id": "prologos",
+      "titulo": "Redacción de Prólogos, Epílogos y Sinopsis",
+      "categoria": "Editorial",
+      "descripcion": "Creación de textos que enmarcan, presentan o resumen la obra, captando el interés del lector.",
+      "formatos": ["Prólogos", "Epílogos", "Sinopsis"],
+      "icono": "📄"
+    },
+    {
+      "id": "material-adicional",
+      "titulo": "Creación de Material Adicional",
+      "categoria": "Editorial",
+      "descripcion": "Desarrollo de secciones complementarias que aportan un toque personal y contextual.",
+      "formatos": ["Dedicatorias", "Agradecimientos", "Notas de autor"],
+      "icono": "✍️"
+    }
+  ],
+
+  "design": [
+    {
+      "id": "portadas",
+      "titulo": "Portadas y Contraportadas Personalizadas",
+      "categoria": "Diseño",
+      "descripcion": "Diseño visual que comunica la esencia del libro y atrae al lector desde el primer vistazo.",
+      "formatos": ["Ilustración", "Fotografía", "Diseño Gráfico"],
+      "icono": "🎨"
+    },
+    {
+      "id": "colecciones-series",
+      "titulo": "Diseño de Colecciones o Series",
+      "categoria": "Diseño",
+      "descripcion": "Creación de una identidad gráfica y temática consistente para varios títulos relacionados.",
+      "formatos": ["Unidad Visual", "Identidad Gráfica", "Temática"],
+      "icono": "📚"
+    },
+    {
+      "id": "ilustraciones",
+      "titulo": "Ilustraciones Personalizadas",
+      "categoria": "Diseño",
+      "descripcion": "Creación artística exclusiva para complementar o embellecer la obra.",
+      "formatos": ["Interiores", "Portadas", "Arte Original"],
+      "icono": "🖼️"
+    }
+  ],
+
+  "translation": [
+    {
+      "id": "traduccion",
+      "titulo": "Traducción",
+      "categoria": "Idiomas",
+      "descripcion": "Adaptación fiel y culturalmente adecuada de la obra a otros idiomas.",
+      "formatos": ["Traducción Literaria", "Adaptación Cultural"],
+      "icono": "🌍"
+    }
+  ],
+
+  "legal": [
+    {
+      "id": "isbn-issn",
+      "titulo": "Asignación y Gestión de ISBN e ISSN",
+      "categoria": "Legal y Técnica",
+      "descripcion": "Obtención de identificadores únicos para libros y publicaciones seriadas, esenciales para su comercialización y catalogación.",
+      "formatos": ["ISBN", "ISSN", "Catalogación"],
+      "icono": "📋"
+    },
+    {
+      "id": "derechos-autor",
+      "titulo": "Registro de Derechos de Autor",
+      "categoria": "Legal y Técnica",
+      "descripcion": "Trámite para proteger legalmente la obra y asegurar la propiedad intelectual del autor.",
+      "formatos": ["Registro Legal", "Protección Intelectual"],
+      "icono": "⚖️"
+    }
+  ],
+
+  "promotion": [
+    {
+      "id": "press-kit",
+      "titulo": "Creación de Kits de Prensa",
+      "categoria": "Promoción y Visibilidad",
+      "descripcion": "Paquete informativo con datos del libro, autor e imágenes, diseñado para medios y presentaciones.",
+      "formatos": ["Press Kit", "Medios", "Autores"],
+      "icono": "📰"
+    },
+    {
+      "id": "campanas-lanzamiento",
+      "titulo": "Campañas de Lanzamiento",
+      "categoria": "Promoción y Visibilidad",
+      "descripcion": "Estrategia de difusión para dar a conocer el libro en múltiples canales.",
+      "formatos": ["Redes Sociales", "Medios Digitales", "Newsletters"],
+      "icono": "🚀"
+    },
+    {
+      "id": "eventos",
+      "titulo": "Eventos de Presentación y Firma de Libros",
+      "categoria": "Promoción y Visibilidad",
+      "descripcion": "Organización de actos para conectar al autor con sus lectores.",
+      "formatos": ["Presencial", "Online", "Híbrido"],
+      "icono": "🎤"
+    },
+    {
+      "id": "booktrailers",
+      "titulo": "Booktrailers y Animaciones Promocionales",
+      "categoria": "Promoción y Visibilidad",
+      "descripcion": "Videos y recursos audiovisuales que generan expectativa y atraen nuevos lectores.",
+      "formatos": ["Videos", "Animaciones", "Contenido Audiovisual"],
+      "icono": "🎬"
+    },
+    {
+      "id": "material-publicitario",
+      "titulo": "Diseño de Material Publicitario",
+      "categoria": "Promoción y Visibilidad",
+      "descripcion": "Elementos gráficos para promocionar el libro en ferias, librerías o medios digitales.",
+      "formatos": ["Afiches", "Banners", "Marcapáginas"],
+      "icono": "📢"
+    },
+    {
+      "id": "relaciones-medios",
+      "titulo": "Relaciones con Medios y Bloggers Literarios",
+      "categoria": "Promoción y Visibilidad",
+      "descripcion": "Gestión de contactos y colaboraciones para aumentar la cobertura del libro.",
+      "formatos": ["Contactos", "Colaboraciones", "Cobertura"],
+      "icono": "🤝"
+    },
+    {
+      "id": "resenas-criticas",
+      "titulo": "Gestión de Reseñas y Críticas Literarias",
+      "categoria": "Promoción y Visibilidad",
+      "descripcion": "Coordinación con críticos, blogs y revistas para obtener opiniones que fortalezcan la reputación de la obra.",
+      "formatos": ["Críticos", "Blogs", "Revistas"],
+      "icono": "⭐"
+    }
+  ],
+
+  "special_production": [
+    {
+      "id": "audiolibros",
+      "titulo": "Audiolibros",
+      "categoria": "Producción Especial",
+      "descripcion": "Conversión de la obra a formato de audio, con narración profesional y distribución en plataformas especializadas.",
+      "formatos": ["Producción", "Locución", "Distribución"],
+      "icono": "🎧"
+    },
+    {
+      "id": "ediciones-multilingues",
+      "titulo": "Ediciones Bilingües o Multilingües",
+      "categoria": "Producción Especial",
+      "descripcion": "Publicación de la obra en más de un idioma en un mismo volumen.",
+      "formatos": ["Bilingüe", "Multilingüe", "Edición Especial"],
+      "icono": "🌐"
+    },
+    {
+      "id": "colecciones-tematicas",
+      "titulo": "Producción de Colecciones Temáticas",
+      "categoria": "Producción Especial",
+      "descripcion": "Desarrollo de obras de referencia y consulta de alta calidad, con contenido visual y textual especializado.",
+      "formatos": ["Atlas", "Enciclopedias", "Libros Académicos"],
+      "icono": "📖"
+    }
+  ],
+  
+  "process": [
+    {
+      "step": "1",
+      "title": "Evaluación",
+      "description": "Análisis del manuscrito y propuesta editorial personalizada",
+      "icon": "📖"
+    },
+    {
+      "step": "2", 
+      "title": "Edición",
+      "description": "Corrección, estilo y estructura para potenciar tu obra",
+      "icon": "✍️"
+    },
+    {
+      "step": "3",
+      "title": "Diseño", 
+      "description": "Maquetación, portada y identidad visual del libro",
+      "icon": "🎨"
+    },
+    {
+      "step": "4",
+      "title": "Lanzamiento",
+      "description": "Publicación, distribución y estrategia de marketing",
+      "icon": "🚀"
+    }
+  ]
+}

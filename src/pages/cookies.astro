@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteData } from '../utils/data';
+const updated = new Date().toISOString().slice(0, 10);
+---
+
+<BaseLayout
+  title={`Política de Cookies - ${siteData.shortName}`}
+  description="Información sobre el uso de cookies y tecnologías similares."
+>
+  <section class="section">
+    <div class="container prose max-w-none">
+      <h1>Política de Cookies 🍪</h1>
+      <p><em>Última actualización: {updated}</em></p>
+
+      <h2>1. ¿Qué son las cookies?</h2>
+      <p>Son pequeños archivos que un sitio coloca en tu dispositivo para recordar preferencias, mejorar el funcionamiento o medir el uso del sitio.</p>
+
+      <h2>2. Qué cookies usamos</h2>
+      <ul>
+        <li><strong>Estrictamente necesarias:</strong> permiten el funcionamiento básico del sitio (seguridad, preferencias de consentimiento).</li>
+        <li><strong>Analíticas (opcionales):</strong> solo se cargarán si otorgas tu consentimiento.</li>
+      </ul>
+
+      <h2>3. Gestión de cookies</h2>
+      <p>Puedes aceptar o rechazar cookies no esenciales desde el banner de consentimiento y también gestionarlas en la configuración de tu navegador.</p>
+
+      <h2>4. Cambios</h2>
+      <p>Actualizaremos esta política cuando incorporemos nuevas cookies o proveedores.</p>
+    </div>
+  </section>
+</BaseLayout>

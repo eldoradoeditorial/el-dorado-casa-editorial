@@ -1,0 +1,76 @@
+---
+export interface Props {
+  label?: string;
+  type?: 'text' | 'email' | 'password' | 'tel' | 'number' | 'url' | 'search';
+  placeholder?: string;
+  required?: boolean;
+  disabled?: boolean;
+  error?: string;
+  helper?: string;
+  id?: string;
+  name?: string;
+  value?: string | number;
+  class?: string;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const {
+  label,
+  type = 'text',
+  placeholder,
+  required = false,
+  disabled = false,
+  error,
+  helper,
+  id,
+  name,
+  value,
+  class: className = '',
+  size = 'md',
+  ...rest
+} = Astro.props;
+
+const inputId = id || name || `input-${Math.random().toString(36).substr(2, 9)}`;
+
+const sizeClasses = {
+  sm: 'px-3 py-2 text-sm',
+  md: 'px-4 py-3 text-base',
+  lg: 'px-5 py-4 text-lg'
+};
+
+const baseClasses = 'w-full border rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed';
+const stateClasses = error 
+  ? 'border-red-300 focus:ring-red-500' 
+  : 'border-gray-300 focus:ring-primary';
+
+const inputClasses = `${baseClasses} ${stateClasses} ${sizeClasses[size]} ${className}`;
+---
+
+<div class="space-y-1">
+  {label && (
+    <label for={inputId} class="block text-sm font-medium text-text-primary">
+      {label}
+      {required && <span class="text-red-500 ml-1">*</span>}
+    </label>
+  )}
+  
+  <input
+    type={type}
+    id={inputId}
+    name={name}
+    placeholder={placeholder}
+    required={required}
+    disabled={disabled}
+    value={value}
+    class={inputClasses}
+    {...rest}
+  />
+  
+  {error && (
+    <p class="text-sm text-red-600">{error}</p>
+  )}
+  
+  {helper && !error && (
+    <p class="text-sm text-text-muted">{helper}</p>
+  )}
+</div>

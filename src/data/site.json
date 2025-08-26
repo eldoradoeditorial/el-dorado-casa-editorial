@@ -1,0 +1,88 @@
+{
+  "name": "El Dorado Servicios Editoriales",
+  "shortName": "El Dorado",
+  "tagline": "Donde las palabras son tesoros",
+  "subtitle": "Servicios Editoriales",
+  "description": "Editorial especializada en literatura de alta calidad y obras académicas de excelencia",
+
+  "contact": {
+    "email": "info@eldoradocasaeditorial.com",
+    "whatsapp": "+14358176059",
+    "locations": [
+      { "city": "Las Vegas", "country": "EE.UU." },
+      { "city": "Medellín", "country": "Colombia" }
+    ],
+    "hours": "Lunes a Viernes: 9:00 AM - 6:00 PM"
+  },
+
+  "social": {
+    "handle": "@eldoradoeditorial",
+    "facebook": "https://facebook.com/eldoradoeditorial",
+    "instagram": "https://instagram.com/eldoradoeditorial",
+    "twitter": "https://twitter.com/eldoradoeditorial"
+  },
+
+  "mission": "Publicar, difundir y preservar obras literarias y de referencia que enriquezcan el intelecto y el espíritu, con un compromiso absoluto por la calidad y la estética editorial. Fomentamos la voz de nuevos talentos y rescatamos obras que merecen permanecer vivas, asegurando que cada libro sea una experiencia sensorial y cultural para el lector.",
+
+  "vision": "Convertirse en la editorial de referencia en el mundo hispanohablante para literatura de alta calidad y obras académicas de excelencia, reconocida por su diseño elegante, su rigor editorial y su compromiso con la preservación y difusión del conocimiento. Aspiramos a ser un puente entre autores emergentes y lectores exigentes.",
+
+  "values": [
+    { "id": "excelencia", "titulo": "Excelencia", "descripcion": "Rigurosidad en cada etapa del proceso editorial. Estándares de calidad en contenido, diseño y acabado.", "icono": "⭐" },
+    { "id": "cultura", "titulo": "Cultura y Conocimiento", "descripcion": "Promoción de la literatura como patrimonio cultural. Difusión de obras académicas que aporten al desarrollo social e intelectual.", "icono": "📚" },
+    { "id": "innovacion", "titulo": "Innovación con Tradición", "descripcion": "Uso de tecnologías modernas en impresión y distribución, manteniendo el cuidado estético de las ediciones clásicas.", "icono": "🔄" },
+    { "id": "talentos", "titulo": "Impulso a Nuevos Talentos", "descripcion": "Espacio para autores emergentes que aporten frescura y diversidad de voces.", "icono": "🌟" },
+    { "id": "sostenibilidad", "titulo": "Sostenibilidad", "descripcion": "Compromiso con prácticas responsables en producción, materiales y distribución.", "icono": "🌱" },
+    { "id": "elegancia", "titulo": "Elegancia y Detalle", "descripcion": "Cuidado por el diseño, la tipografía y la experiencia sensorial que ofrece un libro bien hecho.", "icono": "✨" }
+  ],
+
+  "story": {
+    "origin": "El nombre de nuestra organización nace del corazón mismo de Colombia, inspirado en uno de los mitos más fascinantes y persistentes de la historia andina: la leyenda de El Dorado.",
+    "inspiration": "Durante siglos, este relato ha encendido la imaginación de exploradores, aventureros y estudiosos de todo el mundo, quienes, atraídos por la promesa de un tesoro oculto, se adentraron en territorios desconocidos en busca de lo extraordinario.",
+    "philosophy": "En El Dorado Servicios Editoriales, creemos que los libros son ese tesoro. Cada obra que publicamos es una expedición hacia el conocimiento, la belleza y la creatividad; un viaje que invita a descubrir nuevas ideas, redescubrir la historia y explorar mundos imaginarios."
+  },
+
+  "contactMethods": [
+    { "titulo": "Oficina Principal", "detalles": ["Bogotá, Colombia", "Carrera 15 #93-47, Oficina 501", "Chapinero, Bogotá D.C."], "icono": "📍" },
+    { "titulo": "Correo Electrónico", "detalles": ["info@eldoradocasaeditorial.com", "manuscritos@eldoradocasaeditorial.com", "marketing@eldoradocasaeditorial.com"], "icono": "✉️" },
+    { "titulo": "Teléfono", "detalles": ["+57 (1) 234-5678", "+57 300 123 4567", "Lunes a Viernes: 9:00 AM - 6:00 PM"], "icono": "📞" },
+    { "titulo": "Redes Sociales", "detalles": ["@eldoradoeditorial", "Facebook | Instagram | Twitter", "Síguenos para novedades"], "icono": "🌐" }
+  ],
+
+  "cta": {
+    "primary": "Publica con Nosotros",
+    "secondary": "Explora Nuestro Catálogo"
+  },
+
+  "navigation": [
+    { "label": "Inicio", "href": "/" },
+    { "label": "Nosotros", "href": "/nosotros" },
+    { "label": "Servicios", "href": "/servicios" },
+    { "label": "Catálogo", "href": "/catalogo" },
+    { "label": "Contacto", "href": "/contacto" }
+  ],
+
+  "footerSections": [
+    {
+      "title": "Empresa",
+      "links": [
+        { "name": "Nosotros", "href": "/nosotros" },
+        { "name": "Contacto", "href": "/contacto" },
+        { "name": "Enviar manuscrito", "href": "/enviar-manuscrito" }
+      ]
+    },
+    {
+      "title": "Explora",
+      "links": [
+        { "name": "Catálogo", "href": "/catalogo" },
+        { "name": "Servicios", "href": "/servicios" }
+      ]
+    },
+    {
+      "title": "Legal",
+      "links": [
+        { "name": "Términos", "href": "/terminos" },
+        { "name": "Privacidad", "href": "/privacidad" }
+      ]
+    }
+  ]
+}

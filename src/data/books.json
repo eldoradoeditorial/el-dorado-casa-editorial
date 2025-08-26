@@ -1,0 +1,29 @@
+{
+  "catalog": [
+    {
+      "id": "conoci-estambul",
+      "titulo": "Lo Conocí en Estambul",
+      "autor": "Narly Gómez",
+      "genero": "Ficción Literaria",
+      "año": 2025,
+      "precio": 65000,
+      "portada": "/images/books/Lo Conoci en Estambul.svg",
+      "sinopsis": "“Una travesía de pasión, pérdida y renacimiento. Viajará por el mundo, pero lo esencial lo encontrará en sí misma.” \n\nEntre Estambul, Anatolia y Atenas se despliega una historia donde los paisajes son tan deslumbrantes como las emociones que los atraviesan. No es solo un viaje geográfico: es la ruta íntima de una mujer que, en medio de la diferencia cultural, el amor y la pérdida, descubre la fuerza de su propia voz. Con un lenguaje poético y confesional, esta obra invita a quienes han amado, caído y vuelto a levantarse, a reconocerse en la valentía de reinventarse.",
+      "featured": true,
+      "idioma": "Español",
+      "formato": ["Tapa blanda", "Ebook"],
+      "links": "https://www.google.com"
+    }
+  ],
+  "genres": [
+    "Todos",
+    "Ficción Literaria",
+    "Historia",
+    "Poesía",
+    "Académico",
+    "Literatura Infantil",
+    "Ensayo",
+    "Biografía",
+    "Autoayuda"
+  ]
+}

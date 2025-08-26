@@ -1,0 +1,89 @@
+---
+export interface Props {
+  variant?: 'primary' | 'brand' | 'secondary' | 'secondaryBrand' | 'gold' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  class?: string;
+  target?: '_blank' | '_self' | '_parent' | '_top';
+  id?: string;
+  ariaLabel?: string;
+  title?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  type = 'button',
+  disabled = false,
+  class: className = '',
+  target,
+  id,
+  ariaLabel,
+  title,
+  ...rest
+} = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center font-medium rounded-xl transition-colors duration-200 ' +
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+
+// Paleta:
+// - primary        = NARANJA sólido
+// - brand          = VERDE   sólido
+// - secondary      = borde NARANJA → hover NARANJA
+// - secondaryBrand = borde VERDE   → hover VERDE
+const variantClasses: Record<NonNullable<Props['variant']>, string> = {
+  primary:
+    'bg-accent text-white hover:bg-accent/90 hover:text-white focus-visible:ring-accent shadow-md hover:shadow-lg',
+  brand:
+    'bg-primary text-white hover:bg-primary-dark hover:text-white focus-visible:ring-primary shadow-md hover:shadow-lg',
+  secondary:
+    'bg-transparent border-2 border-accent text-accent hover:bg-accent hover:text-white focus-visible:ring-accent',
+  secondaryBrand:
+    'bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white focus-visible:ring-primary',
+  gold:
+    'bg-gold text-text-primary hover:bg-gold-light focus-visible:ring-gold shadow-md hover:shadow-lg',
+  ghost:
+    'bg-transparent text-primary hover:bg-primary/10 hover:text-primary focus-visible:ring-primary',
+};
+
+const sizeClasses: Record<NonNullable<Props['size']>, string> = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-6 py-3 text-base',
+  lg: 'px-8 py-4 text-lg',
+};
+
+// ⚠️ IMPORTANTE: ponemos className ANTES del variant para que el variant GANE colores.
+const classes = `${base} ${sizeClasses[size]} ${className} ${variantClasses[variant]}`;
+const Element = href ? 'a' : 'button';
+---
+
+{Element === 'a' ? (
+  <a
+    id={id}
+    href={href}
+    class={classes}
+    target={target}
+    rel={target === '_blank' ? 'noopener noreferrer' : undefined}
+    aria-label={ariaLabel}
+    title={title}
+    {...rest}
+  >
+    <slot />
+  </a>
+) : (
+  <button
+    id={id}
+    type={type}
+    class={classes}
+    disabled={disabled}
+    aria-label={ariaLabel}
+    title={title}
+    {...rest}
+  >
+    <slot />
+  </button>
+)}
