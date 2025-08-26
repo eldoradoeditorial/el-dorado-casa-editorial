@@ -20,7 +20,10 @@ const genres = BOOK_GENRES;
   <section class="section bg-gradient-to-br from-bg-primary to-bg-secondary">
     <div class="container">
       <div class="max-w-4xl mx-auto text-center">
-        <h1 class="text-hero text-gradient-primary mb-6">Nuestro Catálogo</h1>
+        <!-- FIX: evitar que se recorte el descendente de la “g” -->
+        <h1 class="text-hero text-gradient-primary mb-6 leading-[1.15] md:leading-[1.1] pb-1">
+          Nuestro Catálogo
+        </h1>
         <p class="text-lead mb-8">Descubre tesoros literarios cuidadosamente seleccionados</p>
         <p class="text-xl text-text-secondary mb-12 max-w-2xl mx-auto">
           Cada libro en nuestro catálogo ha sido elegido por su calidad literaria, 
